@@ -1,9 +1,13 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
+@Entity('categorias')
 export class Categoria {
   @ApiProperty({ example: 1, description: 'Identificador único da categoria' })
-  id: number;
+  @PrimaryGeneratedColumn()
+  id: number
 
   @ApiProperty({ example: 'Medicamentos', description: 'Descrição da categoria' })
-  descricao: string;
+  @Column({ length: 255, nullable: false })
+  descricao: string
 }

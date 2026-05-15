@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Categoria } from './categoria.entity';
-import { CategoriaService } from './categoria.service';
-import { CreateCategoriaDto } from './dto/create-categoria.dto';
-import { UpdateCategoriaDto } from './dto/update-categoria.dto';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common'
+import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { Categoria } from './categoria.entity'
+import { CategoriaService } from './categoria.service'
+import { CreateCategoriaDto } from './dto/create-categoria.dto'
+import { UpdateCategoriaDto } from './dto/update-categoria.dto'
 
 @ApiTags('Categorias')
 @Controller('categorias')
@@ -13,8 +13,8 @@ export class CategoriaController {
   @Get()
   @ApiOperation({ summary: 'Listar todas as categorias' })
   @ApiResponse({ status: 200, description: 'Lista de categorias retornada com sucesso.', type: [Categoria] })
-  findAll(): Categoria[] {
-    return this.categoriaService.findAll();
+  findAll(): Promise<Categoria[]> {
+    return this.categoriaService.findAll()
   }
 
   @Get(':id')
@@ -22,16 +22,16 @@ export class CategoriaController {
   @ApiParam({ name: 'id', example: 1, description: 'ID da categoria' })
   @ApiResponse({ status: 200, description: 'Categoria encontrada com sucesso.', type: Categoria })
   @ApiResponse({ status: 404, description: 'Categoria não encontrada.' })
-  findById(@Param('id', ParseIntPipe) id: number): Categoria {
-    return this.categoriaService.findById(id);
+  findById(@Param('id', ParseIntPipe) id: number): Promise<Categoria> {
+    return this.categoriaService.findById(id)
   }
 
   @Post()
   @ApiOperation({ summary: 'Cadastrar uma nova categoria' })
   @ApiBody({ type: CreateCategoriaDto })
   @ApiResponse({ status: 201, description: 'Categoria cadastrada com sucesso.', type: Categoria })
-  create(@Body() createCategoriaDto: CreateCategoriaDto): Categoria {
-    return this.categoriaService.create(createCategoriaDto);
+  create(@Body() createCategoriaDto: CreateCategoriaDto): Promise<Categoria> {
+    return this.categoriaService.create(createCategoriaDto)
   }
 
   @Put()
@@ -39,8 +39,8 @@ export class CategoriaController {
   @ApiBody({ type: UpdateCategoriaDto })
   @ApiResponse({ status: 200, description: 'Categoria atualizada com sucesso.', type: Categoria })
   @ApiResponse({ status: 404, description: 'Categoria não encontrada.' })
-  update(@Body() updateCategoriaDto: UpdateCategoriaDto): Categoria {
-    return this.categoriaService.update(updateCategoriaDto);
+  update(@Body() updateCategoriaDto: UpdateCategoriaDto): Promise<Categoria> {
+    return this.categoriaService.update(updateCategoriaDto)
   }
 
   @Delete(':id')
@@ -49,7 +49,7 @@ export class CategoriaController {
   @ApiParam({ name: 'id', example: 1, description: 'ID da categoria que será deletada' })
   @ApiResponse({ status: 204, description: 'Categoria deletada com sucesso.' })
   @ApiResponse({ status: 404, description: 'Categoria não encontrada.' })
-  delete(@Param('id', ParseIntPipe) id: number): void {
-    return this.categoriaService.delete(id);
+  delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.categoriaService.delete(id)
   }
 }
